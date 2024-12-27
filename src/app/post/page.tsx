@@ -1,33 +1,30 @@
 "use client";
 
-import CommunityStory from "@/components/community-story";
-import Footer from "@/components/footer";
-import Hero from "@/components/hero";
-import Howitwork from "@/components/howitwork";
-import Navbar from "@/components/navbar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
 
 import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useUser } from "@clerk/nextjs";
+import { submitSyukur } from "./action";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   syukur: z.string().min(10).max(250),
 });
 
 export default function Post() {
+  const { user } = useUser();
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,16 +32,34 @@ export default function Post() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    if (!user) {
+      alert("Please login first");
+      return;
+    }
+
+    const result = await submitSyukur(
+      user.emailAddresses[0].emailAddress,
+      values.syukur
+    );
+
+    console.log(result)
+
+    if (result.success) {
+      form.reset();
+      console.log("Terima kasih telah berbagi syukur!");
+      router.push("/story")
+    } else {
+      alert(result.error);
+    }
   }
 
   return (
     <section className="container mx-auto py-24">
       <div className="px-4">
-        <h1 className="indie-flower text-2xl font-bold py-4 text-center">
+        <h1 className="indie-flower py-4 text-center text-2xl font-bold">
           Apa yg kamu syukuri?
         </h1>
         <Form {...form}>
@@ -56,13 +71,19 @@ export default function Post() {
                 <FormItem>
                   {/* <FormLabel>Ceritakan Syukur mu</FormLabel> */}
                   <FormControl>
-                    <Textarea placeholder="shadcn" {...field} className="h-[200px]" />
+                    <Textarea
+                      placeholder="shadcn"
+                      {...field}
+                      className="h-[200px]"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">Submit</Button>
+            <Button type="submit" className="w-full">
+              Submit
+            </Button>
           </form>
         </Form>
       </div>
