@@ -52,7 +52,7 @@ function CardSyukur({ story }: CardSyukurProps) {
     <Card
       key={story.id}
       className={cn(
-        "group relative mt-4 inline-block w-full transition-all duration-300 hover:-translate-x-2 hover:-translate-y-2 hover:border-2",
+        "group relative mt-4 inline-block w-full transition-all duration-300 hover:-translate-x-2 hover:-translate-y-2",
         story.color
       )}
     >
