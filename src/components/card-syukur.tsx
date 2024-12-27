@@ -6,7 +6,7 @@ import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { cn } from "@/lib/utils";
 
 interface Story {
-  id: number;
+  id: string | number;
   title: string;
   color: string;
 }
