@@ -16,7 +16,7 @@ function Hero() {
           <Link href={"/post"}>
             <Button>Tulis di sini</Button>
           </Link>
-          <Button variant={"secondary"}>lihat yg lain</Button>
+          {/* <Button variant={"secondary"}>lihat yg lain</Button> */}
         </div>
       </div>
     </section>

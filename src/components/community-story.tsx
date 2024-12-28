@@ -20,7 +20,7 @@ function CommunityStory() {
       <div className="mt-8 grid grid-cols-1 gap-4 px-4 md:grid-cols-4">
         <Card className="w-full">
           <div className="p-8">
-            <p className="indie-flower text-xl font-medium">
+            <p className="italic text-xl font-medium">
               "makasih ma bekal makanannya"
             </p>
           </div>
@@ -28,7 +28,7 @@ function CommunityStory() {
 
         <Card className="w-full">
           <div className="p-8">
-            <p className="indie-flower text-xl font-medium">
+            <p className="italic text-xl font-medium">
               "makasih pak gojek udah bantu aku ke kantor tepat waktu"
             </p>
           </div>
@@ -36,7 +36,7 @@ function CommunityStory() {
 
         <Card className="w-full">
           <div className="p-8">
-            <p className="indie-flower text-xl font-medium">
+            <p className="italic text-xl font-medium">
               "alhamdulillah bisa bangun pagi"
             </p>
           </div>
@@ -44,15 +44,15 @@ function CommunityStory() {
 
         <Card className="w-full">
           <div className="p-8">
-            <p className="indie-flower text-xl font-medium">
+            <p className="italic text-xl font-medium">
               "puji tuhan jalanannya lancar"
             </p>
           </div>
         </Card>
       </div>
 
-      <Link href={"/post"}>
-        <Button className="mx-auto mt-10 flex">More</Button>
+      <Link href={"/story"}>
+        <Button className="mx-auto mt-10 flex">Lihat cerita mereka</Button>
       </Link>
     </section>
   );
