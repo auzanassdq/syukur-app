@@ -15,12 +15,15 @@ function Navbar() {
             <h1 className="indie-flower text-4xl font-bold">Makasih</h1>
           </Link>
         </div>
-        <nav className="flex gap-4">
+        <nav className="flex items-center gap-6">
           <Link href="/story" className="hover:underline">
             Kisah mereka
           </Link>
           <Link href="/support" className="hover:underline">
             Support
+          </Link>
+          <Link href="/makasih-ku" className="hover:underline">
+            Makasih Ku
           </Link>
           <SignedOut>
             <SignInButton />
