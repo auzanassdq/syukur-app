@@ -1,14 +1,25 @@
-import { TooltipContent } from "@radix-ui/react-tooltip";
 import React from "react";
+import { OctagonAlert, OctagonX } from "lucide-react";
+
+import { cn, showDate } from "@/lib/utils";
+
 import { Card } from "./ui/card";
-import { Tooltip, TooltipProvider } from "./ui/tooltip";
-import { TooltipTrigger } from "@radix-ui/react-tooltip";
-import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import { db } from "@/db";
+import { syukurTable } from "@/db/schema";
+import { sql } from "drizzle-orm";
 
 interface Story {
   id: string | number;
   title: string;
   color: string;
+  createdAt?: Date;
+  delete?: boolean;
 }
 
 interface CardSyukurProps {
@@ -33,20 +44,6 @@ const QuoteIcon = () => (
   </svg>
 );
 
-const ReportIcon = () => (
-  <svg
-    fill="#000000"
-    version="1.1"
-    id="Capa_1"
-    viewBox="0 0 124 124"
-    className="absolute right-2 top-2 hidden size-5 fill-current text-black/80 hover:cursor-pointer group-hover:block"
-  >
-    <path d="M89.4,1.8C88.3,0.6,86.8,0,85.2,0H38.8c-1.6,0-3.1,0.6-4.2,1.8L1.8,34.6C0.6,35.7,0,37.2,0,38.8v46.4 c0,1.6,0.6,3.1,1.8,4.2l32.8,32.8c1.1,1.1,2.7,1.8,4.2,1.8h46.4c1.6,0,3.1-0.6,4.2-1.8l32.8-32.8c1.1-1.101,1.8-2.7,1.8-4.2V38.8 c0-1.6-0.6-3.1-1.8-4.2L89.4,1.8z M110,79.4c0,1.6-0.6,3.1-1.8,4.199L83.6,108.2c-1.1,1.1-2.699,1.8-4.199,1.8H44.6 c-1.6,0-3.1-0.6-4.2-1.8L15.8,83.6C14.6,82.5,14,81,14,79.4V44.6c0-1.6,0.6-3.1,1.8-4.2l24.6-24.6c1.1-1.1,2.7-1.8,4.2-1.8h34.8 c1.6,0,3.1,0.6,4.199,1.8L108.2,40.4c1.1,1.1,1.8,2.7,1.8,4.2V79.4z" />
-    <path d="M65,23h-6c-3.3,0-6,2.7-6,6v41c0,3.3,2.7,6,6,6h6c3.3,0,6-2.7,6-6V29C71,25.7,68.3,23,65,23z" />
-    <circle cx="62" cy="91.5" r="9" />
-  </svg>
-);
-
 function CardSyukur({ story }: CardSyukurProps) {
   return (
     <Card
@@ -65,13 +62,20 @@ function CardSyukur({ story }: CardSyukurProps) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <ReportIcon />
+              <div className="absolute right-3 top-2 hidden size-5 fill-current font-bold text-black/80 hover:cursor-pointer group-hover:block">
+                {story.delete ? <OctagonX /> : <OctagonAlert />}
+              </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p>report</p>
+              <p>{story.delete ? "delete" : "report"}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
+
+        {/* DATE */}
+        <p className="absolute bottom-2 right-3 text-xs font-medium text-black/50">
+          {story.createdAt && showDate(story.createdAt)}
+        </p>
       </div>
     </Card>
   );
