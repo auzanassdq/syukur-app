@@ -25,7 +25,7 @@ export default async function MakasihKu() {
           <Button className="w-full">mana ceritamu?</Button>
         </Link>
       </div> */}
-      <div className="mt-10 gap-4 px-4 lg:columns-4">
+      <div className="container mx-auto mt-10 columns-1 gap-4 px-4 md:columns-2 lg:columns-4">
         {allStories.map((story) => (
           <CardSyukur
             key={story.id}

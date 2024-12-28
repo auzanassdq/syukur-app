@@ -1,21 +1,38 @@
-import { SignInButton, useUser } from "@clerk/nextjs";
+"use client";
+
+import { cn } from "@/lib/utils";
+import { SignInButton } from "@clerk/nextjs";
 import { SignedOut } from "@clerk/nextjs";
 import { SignedIn } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
+import { Menu } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section className="border">
-      <header className="container mx-auto flex items-center justify-between p-4">
+      <header className="container relative z-50 mx-auto flex items-center justify-between p-4">
         <div className="logo">
           {/* <img src="/logo.png" alt="logo" /> */}
           <Link href={"/"}>
             <h1 className="indie-flower text-4xl font-bold">Makasih</h1>
           </Link>
         </div>
-        <nav className="flex items-center gap-6">
+        <div
+          className="cursor-pointer md:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <Menu />
+        </div>
+        <nav
+          className={cn(
+            "absolute -z-10 flex w-full flex-col items-center justify-center gap-6 bg-white backdrop-blur-sm md:flex-row md:static md:w-auto md:items-center md:justify-end transition-all duration-300",
+            isOpen ? "top-[72px]": "-top-[200px]"
+          )}
+        >
           <Link href="/story" className="hover:underline">
             Kisah mereka
           </Link>
