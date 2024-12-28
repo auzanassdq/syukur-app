@@ -31,21 +31,21 @@ const formSchema = z.object({
 });
 
 const colors = [
-  "slate-200",
-  "red-200",
-  "yellow-200",
-  "lime-200",
-  "green-200",
-  "cyan-200",
-  "blue-200",
-  "indigo-200",
-  "purple-200",
+  "bg-slate-200",
+  "bg-red-200",
+  "bg-yellow-200",
+  "bg-lime-200",
+  "bg-green-200",
+  "bg-cyan-200",
+  "bg-blue-200",
+  "bg-indigo-200",
+  "bg-purple-200"
 ];
 
 export default function Post() {
   const { user } = useUser();
   const router = useRouter();
-  const [selectedColor, setSelectedColor] = useState("slate-200");
+  const [selectedColor, setSelectedColor] = useState("bg-slate-200");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -121,7 +121,7 @@ export default function Post() {
                         >
                           Pilih Warna
                           <div
-                            className={`h-4 w-4 rounded text-center bg-${field.value}`}
+                            className={`h-4 w-4 rounded text-center ${field.value}`}
                           />
                         </Button>
                       </PopoverTrigger>
@@ -131,7 +131,7 @@ export default function Post() {
                             <Button
                               key={color}
                               variant="outline"
-                              className={cn("h-8 w-8", `bg-${color}`)}
+                              className={cn("h-8 w-8", color)}
                               onClick={() => {
                                 field.onChange(color);
                                 setSelectedColor(color);
@@ -194,7 +194,7 @@ function CardSyukur({ story }: CardSyukurProps) {
     <Card
       className={cn(
         "group relative mt-4 inline-block w-full transition-all duration-300 hover:-translate-x-2 hover:-translate-y-2 hover:border-2",
-        `bg-${story.color}`
+        story.color
       )}
     >
       <QuoteIcon />

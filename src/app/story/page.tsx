@@ -49,7 +49,7 @@ export default async function story() {
             key={story.id}
             story={{
               id: story.id,
-              color: "bg-"+story.color,
+              color: story.color,
               title: story.syukur,
             }}
           />
