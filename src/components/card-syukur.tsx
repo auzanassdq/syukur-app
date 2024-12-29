@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import { OctagonAlert, OctagonX } from "lucide-react";
 
@@ -13,6 +15,7 @@ import {
 import { db } from "@/db";
 import { syukurTable } from "@/db/schema";
 import { sql } from "drizzle-orm";
+import { deleteStory } from "@/app/post/action";
 
 interface Story {
   id: string | number;
@@ -45,6 +48,19 @@ const QuoteIcon = () => (
 );
 
 function CardSyukur({ story }: CardSyukurProps) {
+
+  const handleAction = async () => { 
+    if (story.delete) {
+      try {
+        const result = await deleteStory(story.id);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // await deleteStory(story.id);
+    }
+  }
+
   return (
     <Card
       key={story.id}
@@ -62,7 +78,9 @@ function CardSyukur({ story }: CardSyukurProps) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="absolute right-3 top-2 hidden size-5 fill-current font-bold text-black/80 hover:cursor-pointer group-hover:block">
+              <div className="absolute right-3 top-2 hidden size-5 fill-current font-bold text-black/80 hover:cursor-pointer group-hover:block"
+              onClick={handleAction}
+              >
                 {story.delete ? <OctagonX /> : <OctagonAlert />}
               </div>
             </TooltipTrigger>
