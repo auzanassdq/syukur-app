@@ -8,6 +8,7 @@ import { UserButton } from "@clerk/nextjs";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { Button } from "./ui/button";
 
 function Navbar() {
   const user = useUser();
@@ -45,6 +46,11 @@ function Navbar() {
               Makasih Ku
             </Link>
           )}
+          <Button>
+            <Link href="/post" className="hover:underline">
+              Tulis cerita
+            </Link>
+          </Button>
           <SignedOut>
             <SignInButton />
           </SignedOut>
