@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { SignInButton } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
 import { SignedOut } from "@clerk/nextjs";
 import { SignedIn } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 function Navbar() {
+  const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -29,8 +30,8 @@ function Navbar() {
         </div>
         <nav
           className={cn(
-            "absolute -z-10 flex w-full flex-col items-center justify-center gap-6 bg-white backdrop-blur-sm md:flex-row md:static md:w-auto md:items-center md:justify-end transition-all duration-300",
-            isOpen ? "top-[72px]": "-top-[200px]"
+            "absolute -z-10 flex w-full flex-col items-center justify-center gap-6 bg-white backdrop-blur-sm transition-all duration-300 md:static md:w-auto md:flex-row md:items-center md:justify-end",
+            isOpen ? "top-[72px]" : "-top-[200px]"
           )}
         >
           <Link href="/story" className="hover:underline">
@@ -39,9 +40,11 @@ function Navbar() {
           <Link href="/support" className="hover:underline">
             Support
           </Link>
-          <Link href="/makasih-ku" className="hover:underline">
-            Makasih Ku
-          </Link>
+          {user.isSignedIn && (
+            <Link href="/makasih-ku" className="hover:underline">
+              Makasih Ku
+            </Link>
+          )}
           <SignedOut>
             <SignInButton />
           </SignedOut>
