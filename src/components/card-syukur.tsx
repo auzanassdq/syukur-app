@@ -16,6 +16,7 @@ import { db } from "@/db";
 import { syukurTable } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import { deleteStory } from "@/app/post/action";
+import { useRouter } from "next/navigation";
 
 interface Story {
   id: string | number;
@@ -48,13 +49,15 @@ const QuoteIcon = () => (
 );
 
 function CardSyukur({ story }: CardSyukurProps) {
+  const router = useRouter();
 
   const handleAction = async () => { 
     if (story.delete) {
       try {
         const result = await deleteStory(story.id);
+        router.refresh();
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
       // await deleteStory(story.id);
