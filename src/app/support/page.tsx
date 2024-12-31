@@ -5,6 +5,7 @@ import Howitwork from "@/components/howitwork";
 import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Support() {
   return (
@@ -22,7 +23,9 @@ export default function Support() {
 
         <div className="mt-8 flex justify-center gap-4">
           <Button>Feedback</Button>
-          <Button>Saweria</Button>
+          <Button>
+            <Link href={"https://saweria.co/auzanassdq"} target="_blank">Saweria</Link>
+          </Button>
         </div>
       </div>
     </div>
