@@ -4,6 +4,8 @@ import { db } from "@/db";
 import { syukurTable } from "@/db/schema";
 import { desc } from "drizzle-orm";
 
+export const dynamic = 'force-dynamic';
+
 let stories = [
   {
     id: 1,
