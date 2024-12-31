@@ -45,6 +45,7 @@ const colors = [
 export default function Post() {
   const { user } = useUser();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedColor, setSelectedColor] = useState("bg-slate-200");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,17 +64,17 @@ export default function Post() {
       return;
     }
 
+    setIsLoading(true);
     const result = await submitSyukur(
       user.emailAddresses[0].emailAddress,
       values.syukur,
       values.color
     );
 
-    console.log(result);
-
     if (result.success) {
       form.reset();
       console.log("Terima kasih telah berbagi syukur!");
+      setIsLoading(false);
       router.push("/story");
     } else {
       alert(result.error);
@@ -98,9 +99,10 @@ export default function Post() {
                     {/* <FormLabel>Ceritakan Syukur mu</FormLabel> */}
                     <FormControl>
                       <Textarea
-                        placeholder="shadcn"
                         {...field}
+                        placeholder="Tulis syukurmu disini.."
                         className="h-[200px]"
+                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -118,6 +120,7 @@ export default function Post() {
                         <Button
                           variant="outline"
                           className={cn("w-full font-normal")}
+                          disabled={isLoading}
                         >
                           Pilih Warna
                           <div
@@ -145,7 +148,7 @@ export default function Post() {
                 )}
               />
 
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 Submit
               </Button>
             </form>
